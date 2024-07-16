@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.10.34928.147
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AspNetCoreDemo", "AspNetCoreDemo\AspNetCoreDemo.csproj", "{0E3DD4E9-D0DF-48CC-819B-93ED2850C302}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AspNetCoreDemo.Test", "AspNetCoreDemo.Test\AspNetCoreDemo.Test.csproj", "{C0CA7083-F9BA-45E2-9CFD-48813A14182B}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{0E3DD4E9-D0DF-48CC-819B-93ED2850C302}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0E3DD4E9-D0DF-48CC-819B-93ED2850C302}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0E3DD4E9-D0DF-48CC-819B-93ED2850C302}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0E3DD4E9-D0DF-48CC-819B-93ED2850C302}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C0CA7083-F9BA-45E2-9CFD-48813A14182B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C0CA7083-F9BA-45E2-9CFD-48813A14182B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C0CA7083-F9BA-45E2-9CFD-48813A14182B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C0CA7083-F9BA-45E2-9CFD-48813A14182B}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {76B2E223-066E-4E05-9975-2E3EBB2694C5}
+	EndGlobalSection
+EndGlobal
