@@ -2,37 +2,145 @@
 <html lang="en">
 <head>
     <meta charset="utf-8" />
-    <title>BeerOverflow Home</title>
-    <link rel="stylesheet" href="../../css/site.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BeerOverflow</title>
+    <style>
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateY(-50px);
+                opacity: 0;
+            }
+
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f8f9fa;
+            color: #343a40;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            flex-direction: column;
+        }
+
+        header, footer {
+            width: 100%;
+            background-color: #343a40;
+            color: #ffffff;
+            padding: 10px 0;
+            text-align: center;
+            position: fixed;
+            top: 0;
+            animation: fadeIn 2s ease-in-out;
+        }
+
+        footer {
+            bottom: 0;
+            top: auto;
+            animation: fadeIn 3s ease-in-out;
+        }
+
+        .container {
+            text-align: center;
+            padding: 20px;
+            background-color: #ffffff;
+            border: 1px solid #dee2e6;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            animation: fadeIn 2s ease-in-out;
+            margin-top: 60px; /* Space for fixed header */
+            margin-bottom: 60px; /* Space for fixed footer */
+            max-width: 800px;
+        }
+
+        h1 {
+            font-size: 2.5em;
+            margin-bottom: 0.5em;
+            animation: slideIn 1.5s ease-out;
+        }
+
+        p {
+            font-size: 1.2em;
+            line-height: 1.5;
+            animation: fadeIn 2.5s ease-in-out;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+            margin: 20px 0;
+        }
+
+        .nav-links a {
+            color: #ffffff;
+            text-decoration: none;
+            margin: 0 15px;
+        }
+
+            .nav-links a:hover {
+                text-decoration: underline;
+            }
+
+        .footer {
+            margin-top: 2em;
+            font-size: 0.9em;
+            color: #6c757d;
+            animation: fadeIn 3s ease-in-out;
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                margin-top: 40px;
+                margin-bottom: 40px;
+                padding: 15px;
+            }
+
+            h1 {
+                font-size: 2em;
+            }
+
+            p {
+                font-size: 1em;
+            }
+        }
+    </style>
 </head>
 <body>
-    <!-- The header and footer section are the same in each page -->
     <header>
-        <div class="header-elements">
+        <div class="nav-links">
             <h3>
                 <a href="/views/home/index.html">Home</a>
                 | <a href="/views/beers/index.html">Beers</a>
                 | <a href="/views/home/about.html">About</a>
+                | <a href="/api/swagger">Developer API</a>
             </h3>
-            <h3><img src="../../images/logo.png" alt="logo" class="logo-image"></h3>
         </div>
     </header>
 
-    <div class="body-content">
+    <div class="container">
         <h1>Welcome to BeerOverflow!</h1>
-        <p>BeerOverflow is your ultimate destination for discovering and sharing your favorite beers. Whether you are a seasoned beer enthusiast or just starting your journey, BeerOverflow has something for everyone.</p>
-
-        <h2>Explore Our Collection</h2>
-        <p>Our extensive collection of beers features a wide variety of styles, flavors, and brands from around the world. Browse through our selection, read reviews, and find the perfect beer for any occasion.</p>
-
-        <h2>Join the Community</h2>
-        <p>Become a part of the BeerOverflow community by signing up today. Share your thoughts on different beers, rate your favorites, and connect with other beer lovers. Your reviews and ratings help others find the best beers to try.</p>
-
-        <h2>Stay Updated</h2>
-        <p>Keep up with the latest news and trends in the beer world. From new releases to upcoming events, BeerOverflow keeps you informed about everything beer-related.</p>
-
-        <h2>Developer API</h2>
-        <p>Are you a developer? Check out our <a href="/api/swagger">Developer API</a> for access to our extensive database of beers. Integrate BeerOverflow data into your applications and create amazing beer-related experiences for your users.</p>
+        <img src="../../images/logo.png" alt="BeerOverflow Logo" />
+        <p>At BeerOverflow, we are passionate about bringing you the finest selection of beers from around the world. Whether you're a connoisseur or just starting your beer journey, we've got something for everyone.</p>
+        <p>Our mission is to make every sip a delightful experience. Cheers to discovering new flavors and sharing great times with friends!</p>
+    </div>
     </div>
 
     <footer>

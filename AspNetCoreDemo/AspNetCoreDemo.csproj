@@ -14,4 +14,10 @@
     <Folder Include="wwwroot\js\" />
     <Folder Include="wwwroot\images\" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="wwwroot\views\beers\details.html" />
+    <None Include="wwwroot\views\beers\index.html" />
+    <None Include="wwwroot\views\home\about.html" />
+    <None Include="wwwroot\views\home\index.html" />
+  </ItemGroup>
 </Project>
