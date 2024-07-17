@@ -26,7 +26,7 @@ namespace AspNetCoreDemo
 
             builder.Services.AddSwaggerGen(options =>
             {
-                options.SwaggerDoc("v1", new OpenApiInfo { Title = "AspNetCoreDemo API", Version = "v1" });
+                options.SwaggerDoc("v1", new OpenApiInfo { Title = "Beers API", Version = "v1" });
             });
 
             // EF 
