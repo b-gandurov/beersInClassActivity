@@ -139,6 +139,10 @@ namespace AspNetCoreDemo.Data
                 }
             };
 
+            beers[0].Image = "/images/beer1.webp";
+            beers[1].Image = "/images/beer2.webp";
+            beers[2].Image = "/images/beer3.webp";
+
             // Seed the database with data
             modelBuilder.Entity<Style>().HasData(styles);
             modelBuilder.Entity<User>().HasData(users);

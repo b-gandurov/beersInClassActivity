@@ -12,14 +12,14 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AspNetCoreDemo.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    [Migration("20240628205747_Initial")]
+    [Migration("20240717101820_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "6.0.31")
+                .HasAnnotation("ProductVersion", "6.0.32")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
@@ -34,6 +34,9 @@ namespace AspNetCoreDemo.Migrations
 
                     b.Property<double>("Abv")
                         .HasColumnType("float");
+
+                    b.Property<string>("Image")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
@@ -57,6 +60,7 @@ namespace AspNetCoreDemo.Migrations
                         {
                             Id = 1,
                             Abv = 4.5999999999999996,
+                            Image = "/images/beer1.webp",
                             Name = "Glarus English Ale",
                             StyleId = 1,
                             UserId = 2
@@ -65,6 +69,7 @@ namespace AspNetCoreDemo.Migrations
                         {
                             Id = 2,
                             Abv = 5.0,
+                            Image = "/images/beer2.webp",
                             Name = "Rhombus Porter",
                             StyleId = 2,
                             UserId = 2
@@ -73,6 +78,7 @@ namespace AspNetCoreDemo.Migrations
                         {
                             Id = 3,
                             Abv = 6.5999999999999996,
+                            Image = "/images/beer3.webp",
                             Name = "Opasen Char",
                             StyleId = 3,
                             UserId = 3

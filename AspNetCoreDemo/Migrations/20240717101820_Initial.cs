@@ -48,7 +48,8 @@ namespace AspNetCoreDemo.Migrations
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Abv = table.Column<double>(type: "float", nullable: false),
                     StyleId = table.Column<int>(type: "int", nullable: false),
-                    UserId = table.Column<int>(type: "int", nullable: false)
+                    UserId = table.Column<int>(type: "int", nullable: false),
+                    Image = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -114,18 +115,18 @@ namespace AspNetCoreDemo.Migrations
 
             migrationBuilder.InsertData(
                 table: "Beers",
-                columns: new[] { "Id", "Abv", "Name", "StyleId", "UserId" },
-                values: new object[] { 1, 4.5999999999999996, "Glarus English Ale", 1, 2 });
+                columns: new[] { "Id", "Abv", "Image", "Name", "StyleId", "UserId" },
+                values: new object[] { 1, 4.5999999999999996, "/images/beer1.webp", "Glarus English Ale", 1, 2 });
 
             migrationBuilder.InsertData(
                 table: "Beers",
-                columns: new[] { "Id", "Abv", "Name", "StyleId", "UserId" },
-                values: new object[] { 2, 5.0, "Rhombus Porter", 2, 2 });
+                columns: new[] { "Id", "Abv", "Image", "Name", "StyleId", "UserId" },
+                values: new object[] { 2, 5.0, "/images/beer2.webp", "Rhombus Porter", 2, 2 });
 
             migrationBuilder.InsertData(
                 table: "Beers",
-                columns: new[] { "Id", "Abv", "Name", "StyleId", "UserId" },
-                values: new object[] { 3, 6.5999999999999996, "Opasen Char", 3, 3 });
+                columns: new[] { "Id", "Abv", "Image", "Name", "StyleId", "UserId" },
+                values: new object[] { 3, 6.5999999999999996, "/images/beer3.webp", "Opasen Char", 3, 3 });
 
             migrationBuilder.InsertData(
                 table: "Rating",

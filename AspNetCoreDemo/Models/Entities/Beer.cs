@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Reflection;
 
 namespace AspNetCoreDemo.Models
 {
@@ -22,6 +23,8 @@ namespace AspNetCoreDemo.Models
         // A one-to-many relationship between Beer and Rating.
         // One beer can be rated by many users and one user can rate many beers.
         public List<Rating> Ratings { get; set; }
+
+        public string Image {  get; set; }
 
         public override bool Equals(object obj)
         {
