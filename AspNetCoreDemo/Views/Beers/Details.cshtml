@@ -1,0 +1,40 @@
+﻿@using AspNetCoreDemo.Models
+@model BeerResponseDto
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>BeerOverflow - Beer Details</title>
+    <link rel="stylesheet" href="../../css/site.css" />
+</head>
+<body>
+    <header>
+        <div>
+            <h3>
+                <a href="/Home/Index">Home</a>
+                | <a href="/Beers/Index">Beers</a>
+                | <a href="/Home/About">About</a>
+            </h3>
+        </div>
+    </header>
+
+    <div class="body-content">
+        <h1><span id="beer-name">@Model.Name</span></h1>
+        <p><strong>ABV:</strong> <span id="beer-abv">@Model.Abv</span></p>
+        <p><strong>Style:</strong> <span id="beer-style">@Model.Style</span></p>
+        <p><strong>User:</strong> <span id="beer-user"><@Model.User</span></p>
+        <p><strong>Average Rating:</strong> <span id="beer-averageRating">@Model.AverageRating</span></p>
+        <h3>Comments:</h3>
+        <ul id="beer-comments">
+            @foreach (var comment in Model.Comments)
+            {
+                <li>@comment</li>
+            }
+        </ul>
+        </div class="body-content">
+
+        <footer>
+            <small>©️ Copyright 2024, BeerOverflow</small>
+        </footer>
+</body>
+</html>

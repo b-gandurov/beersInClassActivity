@@ -3,8 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
-using AspNetCoreDemo.Controllers;
+using AspNetCoreDemo.Controllers.API;
 using AspNetCoreDemo.Exceptions;
 using AspNetCoreDemo.Helpers;
 using AspNetCoreDemo.Models;

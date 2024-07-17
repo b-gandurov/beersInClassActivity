@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-
 using AspNetCoreDemo.Exceptions;
 using AspNetCoreDemo.Helpers;
 using AspNetCoreDemo.Models;
@@ -9,7 +8,7 @@ using AspNetCoreDemo.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
-namespace AspNetCoreDemo.Controllers
+namespace AspNetCoreDemo.Controllers.API
 {
     [ApiController]
     [Route("api/beers")]
@@ -29,11 +28,11 @@ namespace AspNetCoreDemo.Controllers
         [HttpGet("")]
         public IActionResult Get([FromQuery] BeerQueryParameters filterParameters)
         {
-            var beers = this.beersService
+            var beers = beersService
                 .FilterBy(filterParameters) // Use the query parameters to filter the beers
-                .Select(beer => this.modelMapper.Map(beer)); // Convert each Beer to a BeerResponseDto
+                .Select(beer => modelMapper.Map(beer)); // Convert each Beer to a BeerResponseDto
 
-            return this.Ok(beers);
+            return Ok(beers);
         }
 
         [HttpGet("{id}")]
@@ -41,14 +40,14 @@ namespace AspNetCoreDemo.Controllers
         {
             try
             {
-                Beer beer = this.beersService.GetById(id);
-                BeerResponseDto beerResponseDto = this.modelMapper.Map(beer);
+                Beer beer = beersService.GetById(id);
+                BeerResponseDto beerResponseDto = modelMapper.Map(beer);
 
-                return this.Ok(beerResponseDto);
+                return Ok(beerResponseDto);
             }
             catch (EntityNotFoundException e)
             {
-                return this.NotFound(e.Message);
+                return NotFound(e.Message);
             }
         }
 
@@ -57,20 +56,20 @@ namespace AspNetCoreDemo.Controllers
         {
             try
             {
-                User user = this.authManager.TryGetUser(credentials);
-                Beer beer = this.modelMapper.Map(beerDto);
-                Beer createdBeer = this.beersService.Create(beer, user);
-                BeerResponseDto createdBeerDto = this.modelMapper.Map(createdBeer);
+                User user = authManager.TryGetUser(credentials);
+                Beer beer = modelMapper.Map(beerDto);
+                Beer createdBeer = beersService.Create(beer, user);
+                BeerResponseDto createdBeerDto = modelMapper.Map(createdBeer);
 
-                return this.CreatedAtAction(nameof(GetById), new { id = createdBeer.Id }, createdBeerDto);
+                return CreatedAtAction(nameof(GetById), new { id = createdBeer.Id }, createdBeerDto);
             }
             catch (UnauthorizedOperationException e)
             {
-                return this.Unauthorized(e.Message);
+                return Unauthorized(e.Message);
             }
             catch (DuplicateEntityException e)
             {
-                return this.Conflict(e.Message);
+                return Conflict(e.Message);
             }
         }
 
@@ -79,21 +78,21 @@ namespace AspNetCoreDemo.Controllers
         {
             try
             {
-                User user = this.authManager.TryGetUser(credentials);
-                Beer beer = this.modelMapper.Map(beerDto);
+                User user = authManager.TryGetUser(credentials);
+                Beer beer = modelMapper.Map(beerDto);
 
-                Beer updatedBeer = this.beersService.Update(id, beer, user);
-                BeerResponseDto beerResponseDto = this.modelMapper.Map(updatedBeer);
+                Beer updatedBeer = beersService.Update(id, beer, user);
+                BeerResponseDto beerResponseDto = modelMapper.Map(updatedBeer);
 
-                return this.Ok(beerResponseDto);
+                return Ok(beerResponseDto);
             }
             catch (UnauthorizedOperationException e)
             {
-                return this.Unauthorized(e.Message);
+                return Unauthorized(e.Message);
             }
             catch (EntityNotFoundException e)
             {
-                return this.NotFound(e.Message);
+                return NotFound(e.Message);
             }
         }
 
@@ -102,18 +101,18 @@ namespace AspNetCoreDemo.Controllers
         {
             try
             {
-                User user = this.authManager.TryGetUser(credentials);
-                bool beerDeleted = this.beersService.Delete(id, user);
+                User user = authManager.TryGetUser(credentials);
+                bool beerDeleted = beersService.Delete(id, user);
 
-                return this.Ok(beerDeleted);
+                return Ok(beerDeleted);
             }
             catch (UnauthorizedOperationException e)
             {
-                return this.Unauthorized(e.Message);
+                return Unauthorized(e.Message);
             }
             catch (EntityNotFoundException e)
             {
-                return this.NotFound(e.Message);
+                return NotFound(e.Message);
             }
         }
     }

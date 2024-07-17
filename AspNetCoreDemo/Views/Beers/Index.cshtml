@@ -1,0 +1,54 @@
+﻿@using AspNetCoreDemo.Models
+@model IEnumerable<Beer>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>BeerOverflow Beers</title>
+    <link rel="stylesheet" href="../../css/site.css" />
+</head>
+<body>
+    <header>
+        <div>
+            <h3>
+                <a href="/Home/Index">Home</a>
+                | <a href="/Beers/Index">Beers</a>
+                | <a href="/Home/About">About</a>
+            </h3>
+        </div>
+    </header>
+
+    <div class="body-content">
+        <div class="table">
+            <h2 class="header-cell">Beers</h2>
+            
+            <div class="row-group">
+                @if (Model.Any())
+                {
+                    @foreach (var beer in Model)
+                    {
+                        <div class="row">
+                            <div class="cell">
+                                <a href="/Beers/Details/@beer.Id" class="beer-link">@beer.Name<img src="~/images/beer1.webp" alt="Beer 1" class="beer-image"></a>
+
+                            </div>
+                        </div>
+                    }
+                }
+                else
+                {
+                    <div class="row">
+                        <div class="cell">
+                            <p>No beers currently added</p>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <small>©️ Copyright 2024, BeerOverflow</small>
+    </footer>
+</body>
+</html>

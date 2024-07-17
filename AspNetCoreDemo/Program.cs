@@ -17,7 +17,7 @@ namespace AspNetCoreDemo
         {
             var builder = WebApplication.CreateBuilder(args);
 
-            builder.Services.AddControllers() // Uncomment the lines below if you get the exception "JsonSerializationException: Self referencing loop detected for property..." 
+            builder.Services.AddControllersWithViews() // Uncomment the lines below if you get the exception "JsonSerializationException: Self referencing loop detected for property..." 
                 // .AddNewtonsoftJson(options =>
                 // {
                 //     options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
@@ -71,7 +71,7 @@ namespace AspNetCoreDemo
 
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapControllers();
+                endpoints.MapDefaultControllerRoute();
             });
 
             app.Run();
