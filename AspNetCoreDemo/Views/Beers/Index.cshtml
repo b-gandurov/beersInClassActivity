@@ -24,16 +24,32 @@
     <div class="body-content">
         <div class="table">
             <h2 class="header-cell">Beers</h2>
-            
+
             <div class="row-group">
                 @if (Model.Any())
                 {
+                    @*    @foreach (var beer in Model)
+                {
+                <div class="row">
+                <div class="cell">
+                <a href="/Beers/Details/@beer.Id" class="beer-link">@beer.Name<img src=@beer.Image alt="Beer 1" class="beer-image"></a>
+
+                </div>
+                </div>
+                } *@
                     @foreach (var beer in Model)
                     {
                         <div class="row">
                             <div class="cell">
-                                <a href="/Beers/Details/@beer.Id" class="beer-link">@beer.Name<img src=@beer.Image alt="Beer 1" class="beer-image"></a>
-                                
+                                <a href="/Beers/Details/@beer.Id" class="beer-link">@beer.Name</a>
+                                <div class="beer-short-details">
+                                    <img src=@beer.Image alt="Beer 1" class="beer-image">
+@*                                     <div class="beer-short-details">
+                                        <p>ABV: @beer.Abv %</p>
+                                        <p>Style: @beer.Style.Name</p>
+                                        <p>Ratings: @beer.Ratings.Count</p>
+                                    </div> *@
+                                </div>
                             </div>
                         </div>
                     }

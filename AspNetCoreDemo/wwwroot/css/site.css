@@ -16,6 +16,45 @@ a {
     padding: 10px 50px 50px 50px;
 }
 
+.form-divs{
+    width: 30%;
+}
+
+.form-divs > div {
+    margin-bottom: 10px;
+}
+
+.form-divs label {
+    display: block;
+    margin-bottom: 0.5rem;
+}
+
+.form-divs input[type="text"],
+.form-divs input[type="number"],
+.form-divs select {
+    width: 100%;
+    padding: 0.375rem 0.75rem;
+    margin-bottom: 0.5rem;
+    font-size: 1rem;
+    line-height: 1.5;
+    color: #495057;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #ced4da;
+    border-radius: 0.25rem;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+.gray-input {    
+    background-color: #f0f0f0 !important;
+    border-color: #ced4da !important;
+    color: #6c757d !important;
+}
+
+.form-divs .button {
+    margin-left: 0.5rem;
+}
+
 .table {
     display: table;
     width: 100%;
@@ -53,6 +92,17 @@ a {
     position: relative;
     z-index: 10;
 }
+/*.beer-short-details {
+    display: none;
+    flex-direction: row;
+    align-items: center;
+    justify-content:space-around;
+    align-content: center;
+}
+
+.cell:hover .beer-short-details {
+    display: flex !important;
+}*/
 
 .beer-image {
     position: absolute;
@@ -73,13 +123,13 @@ a {
     width: 200px;
     height: 200px;
     opacity: 1;
-    left:0;
-    top: 30px; 
+    left: 0;
+    top: 40px;
 }
 
 .row:hover {
     background-color: #f0f0f0;
-    transition:all 0.5s ease-in-out;
+    transition: all 0.5s ease-in-out;
 }
 
 .header-elements {
@@ -90,9 +140,9 @@ a {
     width: 100%;
 }
 
-.header-elements h3 {
-    margin: 0;
-}
+    .header-elements h3 {
+        margin: 0;
+    }
 
 .logo-image {
     height: 50px;

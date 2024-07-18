@@ -8,16 +8,21 @@
     <meta charset="utf-8" />
     <title>Edit Beer</title>
     <link rel="stylesheet" href="~/css/site.css" />
+    <style>
+        .edit-name {
+            background-color: lightgrey;
+        }
+    </style>
 </head>
 <body>
     <header>
         <div class="header-elements">
             <h3>
                 <a href="/Home/Index" class="nav">Home</a>
-                | <a href="/Home/About" class="nav">About</a>
                 | <a href="/Beers/Index" class="nav">Beers</a>
+                | <a href="/Home/About" class="nav">About</a>
                 | <a href="/Beers/Create" class="nav">Create</a>
-                
+
             </h3>
             <h3><img src="~/images/logo.png" alt="logo" class="logo-image"></h3>
         </div>
@@ -26,26 +31,29 @@
     <div class="body-content">
         <h2>Edit Beer</h2>
         <form asp-controller="Beers" asp-action="Edit" method="post">
-            <div>
-                <label asp-for="Name"></label>
-                <input asp-for="Name" type="text" readonly />
-                <span asp-validation-for="Name"></span>
-            </div>
-            
-            <div>
-                <label asp-for="Abv"></label>
-                <input asp-for="Abv" type="number" step="any" />
-                <span asp-validation-for="Abv"></span>
-            </div>
-            
-            <div>
-                <label asp-for="StyleId"></label>
-                <select asp-for="StyleId" asp-items="@Model.Styles"></select>
-                <span asp-validation-for="StyleId"></span>
-            </div>
-            
-            <div>
-                <input type="submit" value="Save" />
+            <div class="form-divs">
+                <div>
+                    <label asp-for="Name"></label>
+                    <input asp-for="Name" type="text" class="gray-input" readonly />
+                    <span asp-validation-for="Name"></span>
+                </div>
+
+                <div>
+                    <label asp-for="Abv"></label>
+                    <input asp-for="Abv" type="number" step="any" />
+                    <span asp-validation-for="Abv"></span>
+                </div>
+
+                <div>
+                    <label asp-for="StyleId"></label>
+                    <select asp-for="StyleId" asp-items="@Model.Styles"></select>
+                    <span asp-validation-for="StyleId"></span>
+                </div>
+
+                <div>
+                    <input type="submit" value="Save" />
+                    <a class="button" href="/Beers/Index">Cancel</a>
+                </div>
             </div>
         </form>
     </div>
