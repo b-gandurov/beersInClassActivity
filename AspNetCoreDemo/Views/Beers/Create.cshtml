@@ -1,0 +1,47 @@
+﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@using AspNetCoreDemo.Models
+@model BeerViewModel
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>BeerOverflow - Beer Details</title>
+    <link rel="stylesheet" href="../../css/site.css" />
+</head>
+<body>
+    <header>
+        <div>
+            <h3>
+                <a href="/Home/Index">Home</a>
+                | <a href="/Beers/Index">Beers</a>
+                | <a href="/Home/About">About</a>
+                | <a href="/Beers/Create">Create</a>
+            </h3>
+        </div>
+    </header>
+
+    <div class="body-content">
+        <h2>Create a new beer</h2>
+ 
+<form asp-controller="Beers" asp-action="Create" method="post">
+    <label asp-for="Name"></label>
+    <input asp-for="Name" type="text" />
+    <span asp-validation-for="Name"></span>
+ 
+    <label asp-for="Abv"></label>
+    <input asp-for="Abv" type="number" step="any" />
+    <span asp-validation-for="Abv"></span>
+ 
+    <label asp-for="StyleId"></label>
+    <select asp-for="StyleId" asp-items="@Model.Styles"></select>
+    <span asp-validation-for="StyleId"></span>
+ 
+    <input type="submit" value="Create" />
+</form>
+        </div class="body-content">
+
+        <footer>
+            <small>©️ Copyright 2024, BeerOverflow</small>
+        </footer>
+</body>
+</html>

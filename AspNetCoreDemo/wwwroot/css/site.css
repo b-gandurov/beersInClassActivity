@@ -97,3 +97,13 @@ a {
 .logo-image {
     height: 50px;
 }
+
+.beer-button {
+    position: absolute;
+    top: 0;
+    width: 0;
+    height: 0;
+    opacity: 0;
+    transition: opacity 0.5s ease-in-out;
+    z-index: 5;
+}

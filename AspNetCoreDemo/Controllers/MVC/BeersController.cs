@@ -1,9 +1,12 @@
 ﻿using AspNetCoreDemo.Exceptions;
 using AspNetCoreDemo.Helpers;
+using AspNetCoreDemo.Models;
 using AspNetCoreDemo.Services;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Polly;
 using System;
+using System.Data;
 
 namespace AspNetCoreDemo.Controllers.MVC
 {
@@ -11,11 +14,16 @@ namespace AspNetCoreDemo.Controllers.MVC
     {
         private readonly IBeersService _beersService;
         private readonly ModelMapper _mapper;
+        private readonly IStylesService _stylesService;
+        private readonly IUsersService _usersService;
 
-        public BeersController(IBeersService beersService, ModelMapper mapper)
+        public BeersController(IBeersService beersService, ModelMapper mapper, IStylesService stylesService, IUsersService usersService)
         {
             _beersService = beersService;
             _mapper = mapper;
+            _stylesService = stylesService;
+            _usersService = usersService;
+
         }
         public IActionResult Index()
         {
@@ -30,6 +38,7 @@ namespace AspNetCoreDemo.Controllers.MVC
             {
                 var beer = _beersService.GetById(id);
                 var beerResponce = _mapper.Map(beer);
+                ViewData["id"] = beer.Id;
                 return View(beerResponce);
             }
             catch (EntityNotFoundException ex)
@@ -45,5 +54,85 @@ namespace AspNetCoreDemo.Controllers.MVC
                 return View("Error");
             }
         }
+
+        [HttpGet]
+        public IActionResult Create()
+        {
+            var beerViewModel = new BeerViewModel
+            {
+                Styles = new SelectList(_stylesService.GetAll(), "Id", "Name")
+            };
+            return View(beerViewModel);
+        }
+
+        [HttpPost]
+        public IActionResult Create(BeerViewModel beerViewModel)
+        {
+            if (!ModelState.IsValid)
+            {
+                beerViewModel.Styles = new SelectList(_stylesService.GetAll(), "Id", "Name");
+                return View(beerViewModel);
+            }
+
+            var newBeer = new Beer
+            {
+                Name = beerViewModel.Name,
+                Abv = beerViewModel.Abv,
+                StyleId = beerViewModel.StyleId
+            };
+            var user = _usersService.GetById(1);
+            newBeer.User = user;
+            _beersService.Create(newBeer,user);
+            return RedirectToAction("Details", new { id = newBeer.Id });
+        }
+        [HttpGet]
+        public IActionResult Edit(int id)
+        {
+            var beer = _beersService.GetById(id);
+
+            var beerViewModel = new BeerViewModel
+            {
+                Name = beer.Name,
+                Abv = beer.Abv,
+                StyleId = beer.StyleId,
+                Styles = new SelectList(_stylesService.GetAll(), "Id", "Name")
+            };
+            return View(beerViewModel);
+        }
+
+        [HttpPost]
+        public IActionResult Edit(int id, BeerViewModel beerViewModel)
+        {
+            if (!ModelState.IsValid)
+            {
+                beerViewModel.Styles = new SelectList(_stylesService.GetAll(), "Id", "Name");
+                return View(beerViewModel);
+            }
+
+            var beerToUpdate = _beersService.GetById(id);
+            var user = _usersService.GetById(1);
+            beerToUpdate.Abv = beerViewModel.Abv;
+            beerToUpdate.StyleId = beerViewModel.StyleId;
+
+            _beersService.Update(id, beerToUpdate, user);
+            return RedirectToAction("Details", new { id = beerToUpdate.Id });
+        }
+
+        [HttpGet]
+        public IActionResult Delete(int id)
+        {
+            var beer = _beersService.GetById(id);
+            return View(beer);
+        }
+
+        [HttpPost, ActionName("Delete")]
+        public IActionResult DeleteConfirmed(int id)
+        {
+            var user = _usersService.GetById(1);
+            _beersService.Delete(id, user);
+            return RedirectToAction("Index");
+        }
+
+
     }
 }
