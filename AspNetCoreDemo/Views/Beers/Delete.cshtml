@@ -1,45 +1,13 @@
-﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
-@using AspNetCoreDemo.Models
-@model Beer
-
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="utf-8" />
-    <title>Delete Beer</title>
-    <link rel="stylesheet" href="~/css/site.css" />
-</head>
-<body>
-    <header>
-        <div class="header-elements">
-            <h3>
-                <a href="/Home/Index" class="nav">Home</a>
-                | <a href="/Home/About" class="nav">About</a>
-                | <a href="/Beers/Index" class="nav">Beers</a>
-                | <a href="/Beers/Create" class="nav">Create</a>
-            </h3>
-            <h3><img src="~/images/logo.png" alt="logo" class="logo-image"></h3>
-        </div>
-    </header>
-
-    <div class="body-content">
-        <h2>Delete Beer</h2>
-        <h3>Are you sure you want to delete this?</h3>
-        <div class="mt-50">
-            <h4>@Model.Name</h4>
-            <p>ABV: @Model.Abv%</p>
-            <p>Style: @Model.Style.Name</p>
-        </div>
-        <form asp-controller="Beers" asp-action="Delete" method="post">
-            <input type="hidden" asp-for="Id" />
-            <input type="submit" value="Delete" />
-            <a href="/Beers/Index">Cancel</a>
-        </form>
-    </div>
-
-    <footer>
-        <small>©️ Copyright 2024, BeerOverflow</small>
-    </footer>
-</body>
-</html>
+﻿@model Beer
+<h2>Delete Beer</h2>
+<h3>Are you sure you want to delete this?</h3>
+<div class="mt-50">
+    <h4>@Model.Name</h4>
+    <p>ABV: @Model.Abv%</p>
+    <p>Style: @Model.Style.Name</p>
+</div>
+<form asp-controller="Beers" asp-action="Delete" method="post">
+    <input type="hidden" asp-for="Id" />
+    <input type="submit" value="Delete" />
+    <a href="/Beers/Index">Cancel</a>
+</form>

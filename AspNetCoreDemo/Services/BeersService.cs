@@ -26,6 +26,13 @@ namespace AspNetCoreDemo.Services
             return this.repository.FilterBy(filterParameters);
         }
 
+        public void VerifyUser(User user,int beerId) {
+            Beer beer = repository.GetById(beerId);
+            if (beer.UserId!=user.Id && !user.IsAdmin) {
+                throw new UnauthorizedOperationException(ModifyBeerErrorMessage);
+            }
+        }
+
         public Beer GetById(int id)
         {
             return this.repository.GetById(id);

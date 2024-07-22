@@ -11,5 +11,7 @@ namespace AspNetCoreDemo.Services
         Beer Create(Beer beer, User user);
         Beer Update(int id, Beer beer, User user);
         bool Delete(int id, User user);
+
+        public void VerifyUser(User user, int beerId);
     }
 }

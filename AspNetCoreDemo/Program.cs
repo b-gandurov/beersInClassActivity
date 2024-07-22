@@ -8,6 +8,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Models;
 using Newtonsoft.Json;
+using System;
 
 namespace AspNetCoreDemo
 {
@@ -42,6 +43,12 @@ namespace AspNetCoreDemo
                 // The following helps with debugging the trobled relationship between EF and SQL ¯\_(-_-)_/¯ 
                 options.EnableSensitiveDataLogging();
             });
+            builder.Services.AddSession(options =>
+            {
+                options.IdleTimeout = TimeSpan.FromMinutes(30);
+                options.Cookie.HttpOnly = true;
+                options.Cookie.IsEssential = true;
+            });
 
             // Repositories
             builder.Services.AddScoped<IBeersRepository, BeersRepository>();
@@ -57,8 +64,16 @@ namespace AspNetCoreDemo
             builder.Services.AddScoped<ModelMapper>();
             builder.Services.AddScoped<AuthManager>();
 
-            var app = builder.Build();
+            // Service Locator
+            builder.Services.AddHttpContextAccessor();
+            
+            // Register your services
 
+
+            var app = builder.Build();
+            ServiceLocator.Configure(app.Services);
+
+            app.UseSession();
             app.UseDeveloperExceptionPage();
             app.UseStaticFiles();
             app.UseRouting();

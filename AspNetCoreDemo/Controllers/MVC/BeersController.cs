@@ -4,9 +4,11 @@ using AspNetCoreDemo.Models;
 using AspNetCoreDemo.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
 using Polly;
 using System;
 using System.Data;
+using System.Net;
 
 namespace AspNetCoreDemo.Controllers.MVC
 {
@@ -16,13 +18,15 @@ namespace AspNetCoreDemo.Controllers.MVC
         private readonly ModelMapper _mapper;
         private readonly IStylesService _stylesService;
         private readonly IUsersService _usersService;
+        private readonly AuthManager _authManager;
 
-        public BeersController(IBeersService beersService, ModelMapper mapper, IStylesService stylesService, IUsersService usersService)
+        public BeersController(IBeersService beersService, ModelMapper mapper, IStylesService stylesService, IUsersService usersService, AuthManager authManager)
         {
             _beersService = beersService;
             _mapper = mapper;
             _stylesService = stylesService;
             _usersService = usersService;
+            _authManager = authManager;
 
         }
         public IActionResult Index()
@@ -56,6 +60,7 @@ namespace AspNetCoreDemo.Controllers.MVC
         }
 
         [HttpGet]
+        [IsAuhenticated]
         public IActionResult Create()
         {
             var beerViewModel = new BeerViewModel
@@ -66,6 +71,7 @@ namespace AspNetCoreDemo.Controllers.MVC
         }
 
         [HttpPost]
+        [IsAuhenticated]
         public IActionResult Create(BeerViewModel beerViewModel)
         {
             if (!ModelState.IsValid)
@@ -82,25 +88,51 @@ namespace AspNetCoreDemo.Controllers.MVC
             };
             var user = _usersService.GetById(1);
             newBeer.User = user;
-            _beersService.Create(newBeer,user);
+            _beersService.Create(newBeer, user);
             return RedirectToAction("Details", new { id = newBeer.Id });
         }
         [HttpGet]
+        [IsAuhenticated]
         public IActionResult Edit(int id)
         {
-            var beer = _beersService.GetById(id);
-
-            var beerViewModel = new BeerViewModel
+            try
             {
-                Name = beer.Name,
-                Abv = beer.Abv,
-                StyleId = beer.StyleId,
-                Styles = new SelectList(_stylesService.GetAll(), "Id", "Name")
-            };
-            return View(beerViewModel);
+                var user = _authManager.CurrentUser;
+                _beersService.VerifyUser(user, id);
+                var beer = _beersService.GetById(id);
+
+
+
+                var beerViewModel = new BeerViewModel
+                {
+                    Name = beer.Name,
+                    Abv = beer.Abv,
+                    StyleId = beer.StyleId,
+                    Styles = new SelectList(_stylesService.GetAll(), "Id", "Name")
+                };
+                return View(beerViewModel);
+            }catch (UnauthorizedOperationException ex)
+            {
+                ViewData["ErrorMessage"] = ex.Message;
+                Response.StatusCode = 403;
+                return View("Error");
+            }
+            catch (EntityNotFoundException ex)
+            {
+                ViewData["ErrorMessage"] = ex.Message;
+                Response.StatusCode = 404;
+                return View("Error");
+            }
+            catch (Exception ex)
+            {
+                ViewData["ErrorMessage"] = ex.Message;
+                Response.StatusCode = 500;
+                return View("Error");
+            }
         }
 
         [HttpPost]
+        [IsAuhenticated]
         public IActionResult Edit(int id, BeerViewModel beerViewModel)
         {
             if (!ModelState.IsValid)
@@ -111,6 +143,8 @@ namespace AspNetCoreDemo.Controllers.MVC
 
             var beerToUpdate = _beersService.GetById(id);
             var user = _usersService.GetById(1);
+
+
             beerToUpdate.Abv = beerViewModel.Abv;
             beerToUpdate.StyleId = beerViewModel.StyleId;
 
@@ -119,13 +153,38 @@ namespace AspNetCoreDemo.Controllers.MVC
         }
 
         [HttpGet]
+        [IsAuhenticated]
         public IActionResult Delete(int id)
         {
-            var beer = _beersService.GetById(id);
+            try
+            {
+                var user = _authManager.CurrentUser;
+                _beersService.VerifyUser(user, id);
+                var beer = _beersService.GetById(id);
             return View(beer);
+            }
+            catch (UnauthorizedOperationException ex)
+            {
+                ViewData["ErrorMessage"] = ex.Message;
+                Response.StatusCode = 403;
+                return View("Error");
+            }
+            catch (EntityNotFoundException ex)
+            {
+                ViewData["ErrorMessage"] = ex.Message;
+                Response.StatusCode = 404;
+                return View("Error");
+            }
+            catch (Exception ex)
+            {
+                ViewData["ErrorMessage"] = ex.Message;
+                Response.StatusCode = 500;
+                return View("Error");
+            }
         }
 
         [HttpPost, ActionName("Delete")]
+        [IsAuhenticated]
         public IActionResult DeleteConfirmed(int id)
         {
             var user = _usersService.GetById(1);

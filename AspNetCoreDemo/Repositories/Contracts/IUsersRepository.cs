@@ -9,5 +9,6 @@ namespace AspNetCoreDemo.Repositories
         List<User> GetAll();
         User GetById(int id);
         User GetByUsername(string username);
+        public User CreateUser(User user);
     }
 }

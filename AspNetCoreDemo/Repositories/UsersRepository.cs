@@ -1,6 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
-
+using System.Text;
 using AspNetCoreDemo.Data;
 using AspNetCoreDemo.Exceptions;
 using AspNetCoreDemo.Models;
@@ -16,6 +17,20 @@ namespace AspNetCoreDemo.Repositories
         public UsersRepository(ApplicationContext context)
         {
             this.context = context;
+        }
+
+        public User CreateUser (User user)
+        {
+            var userCheck = this.GetUsers().FirstOrDefault(u => u.Username == user.Username);
+            if (userCheck is null)
+            {
+                var originalPassowrd = user.Password;
+                user.Password = Convert.ToBase64String(Encoding.UTF8.GetBytes(originalPassowrd));
+                this.context.Users.Add(user);
+                this.context.SaveChanges();
+                return user;
+            }
+            throw new DuplicateEntityException($"User with {user.Username} already exists.");
         }
 
         public List<User> GetAll()

@@ -27,5 +27,10 @@ namespace AspNetCoreDemo.Services
         {
             return this.repository.GetByUsername(username);
         }
+
+        public User CreateUser(User user)
+        {
+            return this.repository.CreateUser(user);
+        }
     }
 }
