@@ -4,7 +4,7 @@
 
 @model LoginViewModel
 
-<form asp-action="Login" method="post">
+<form class="user-form" asp-action="Login" method="post">
     <div class="form-divs">
         <div>
             <label asp-for="Username"></label>
@@ -16,8 +16,11 @@
             <input type="password" asp-for="Password" />
             <span asp-validation-for="Password"></span>
         </div>
-        
-        <div><button type="submit">Login</button></div>
+
+        <div>
+            <button type="submit">Login</button>
+            <a class="button" href="/Beers/Index">Cancel</a>
+        </div>
 
     </div>
 </form>

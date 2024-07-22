@@ -17,10 +17,6 @@ namespace AspNetCoreDemo.Helpers
     {
         private IBeersService _beerService;
         private IUsersService _userService;
-        public IsAuthenticatedAttribute()
-        {
-            
-        }
         public void OnAuthorization(AuthorizationFilterContext context)
         {
             try
@@ -35,14 +31,21 @@ namespace AspNetCoreDemo.Helpers
                     return;
                 }
 
-                var beerId = int.Parse(context.RouteData.Values["id"].ToString());
-                var beer = _beerService.GetById(beerId);
-                var userName = context.HttpContext.Session.GetString("CurrentUser");
-                var user = _userService.GetByUsername(userName);
-
-                if (!user.IsAdmin && beer.UserId != user.Id)
+                var actionName = context.RouteData.Values["action"].ToString();
+                if (actionName == "Edit" || actionName == "Delete")
                 {
-                    throw new UnauthorizedOperationException("You are not authorized to perform this action.");
+                    if (!context.RouteData.Values.TryGetValue("id", out var idValue) || idValue == null || !int.TryParse(idValue.ToString(), out var beerId))
+                    {
+                        throw new EntityNotFoundException("Beer not found.");
+                    }
+                    var beer = _beerService.GetById(beerId);
+                    var userName = context.HttpContext.Session.GetString("CurrentUser");
+                    var user = _userService.GetByUsername(userName);
+
+                    if (!user.IsAdmin && beer.UserId != user.Id)
+                    {
+                        throw new UnauthorizedOperationException("You are not authorized to perform this action.");
+                    }
                 }
             }
             catch (UnauthorizedOperationException ex)
@@ -66,10 +69,8 @@ namespace AspNetCoreDemo.Helpers
             result.ViewData = new ViewDataDictionary(
                 new EmptyModelMetadataProvider(),
                 context.ModelState
-            )
-            {
-                ["ErrorMessage"] = ex.Message
-            };
+            );
+            result.ViewData["ErrorMessage"] = ex.Message;
             context.Result = result;
         }
     }

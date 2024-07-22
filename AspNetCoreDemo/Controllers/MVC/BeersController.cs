@@ -2,6 +2,7 @@
 using AspNetCoreDemo.Helpers;
 using AspNetCoreDemo.Models;
 using AspNetCoreDemo.Services;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -86,7 +87,8 @@ namespace AspNetCoreDemo.Controllers.MVC
                 Abv = beerViewModel.Abv,
                 StyleId = beerViewModel.StyleId
             };
-            var user = _usersService.GetById(1);
+            var userName = HttpContext.Session.GetString("CurrentUser");
+            var user = _usersService.GetByUsername(userName);
             newBeer.User = user;
             _beersService.Create(newBeer, user);
             return RedirectToAction("Details", new { id = newBeer.Id });
