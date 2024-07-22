@@ -5,6 +5,7 @@ using AspNetCoreDemo.Services;
 using AspNetCoreDemo.Models;
 using Polly;
 using Microsoft.AspNetCore.Http;
+using AspNetCoreDemo.Repositories;
 
 namespace AspNetCoreDemo.Helpers
 {
@@ -13,39 +14,11 @@ namespace AspNetCoreDemo.Helpers
         private const string InvalidCredentialsErrorMessage = "Invalid credentials!";
 
         private readonly IUsersService usersService;
-        private readonly IHttpContextAccessor accessor;
         
 
-        public AuthManager(IUsersService usersService,IHttpContextAccessor accessor)
+        public AuthManager(IUsersService usersService)
         {
             this.usersService = usersService;
-            this.accessor = accessor;
-        }
-
-        public User CurrentUser
-        {
-            get
-            {
-                string username = this.accessor.HttpContext.Session.GetString("CurrentUser");
-                if (username == null)
-                {
-                    return null;
-                }
-                return usersService.GetByUsername(username);
-            }
-            private set
-            {
-                User user = value;
-                if (user != null)
-                {
-                    this.accessor.HttpContext.Session.SetString("CurrentUser", user.Username);
-                }
-                else
-                {
-                    this.accessor.HttpContext.Session.Remove("CurrentUser");
-                }
-
-            }
         }
 
         public virtual User TryGetUser(string credentials)

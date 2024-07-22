@@ -60,7 +60,7 @@ namespace AspNetCoreDemo.Controllers.MVC
         }
 
         [HttpGet]
-        [IsAuhenticated]
+        [IsAuthenticated]
         public IActionResult Create()
         {
             var beerViewModel = new BeerViewModel
@@ -71,7 +71,7 @@ namespace AspNetCoreDemo.Controllers.MVC
         }
 
         [HttpPost]
-        [IsAuhenticated]
+        [IsAuthenticated]
         public IActionResult Create(BeerViewModel beerViewModel)
         {
             if (!ModelState.IsValid)
@@ -92,47 +92,22 @@ namespace AspNetCoreDemo.Controllers.MVC
             return RedirectToAction("Details", new { id = newBeer.Id });
         }
         [HttpGet]
-        [IsAuhenticated]
+        [IsAuthenticated]
         public IActionResult Edit(int id)
         {
-            try
+            var beer = _beersService.GetById(id);
+            var beerViewModel = new BeerViewModel
             {
-                var user = _authManager.CurrentUser;
-                _beersService.VerifyUser(user, id);
-                var beer = _beersService.GetById(id);
-
-
-
-                var beerViewModel = new BeerViewModel
-                {
-                    Name = beer.Name,
-                    Abv = beer.Abv,
-                    StyleId = beer.StyleId,
-                    Styles = new SelectList(_stylesService.GetAll(), "Id", "Name")
-                };
-                return View(beerViewModel);
-            }catch (UnauthorizedOperationException ex)
-            {
-                ViewData["ErrorMessage"] = ex.Message;
-                Response.StatusCode = 403;
-                return View("Error");
-            }
-            catch (EntityNotFoundException ex)
-            {
-                ViewData["ErrorMessage"] = ex.Message;
-                Response.StatusCode = 404;
-                return View("Error");
-            }
-            catch (Exception ex)
-            {
-                ViewData["ErrorMessage"] = ex.Message;
-                Response.StatusCode = 500;
-                return View("Error");
-            }
+                Name = beer.Name,
+                Abv = beer.Abv,
+                StyleId = beer.StyleId,
+                Styles = new SelectList(_stylesService.GetAll(), "Id", "Name")
+            };
+            return View(beerViewModel);
         }
 
         [HttpPost]
-        [IsAuhenticated]
+        [IsAuthenticated]
         public IActionResult Edit(int id, BeerViewModel beerViewModel)
         {
             if (!ModelState.IsValid)
@@ -153,38 +128,15 @@ namespace AspNetCoreDemo.Controllers.MVC
         }
 
         [HttpGet]
-        [IsAuhenticated]
+        [IsAuthenticated]
         public IActionResult Delete(int id)
         {
-            try
-            {
-                var user = _authManager.CurrentUser;
-                _beersService.VerifyUser(user, id);
-                var beer = _beersService.GetById(id);
+            var beer = _beersService.GetById(id);
             return View(beer);
-            }
-            catch (UnauthorizedOperationException ex)
-            {
-                ViewData["ErrorMessage"] = ex.Message;
-                Response.StatusCode = 403;
-                return View("Error");
-            }
-            catch (EntityNotFoundException ex)
-            {
-                ViewData["ErrorMessage"] = ex.Message;
-                Response.StatusCode = 404;
-                return View("Error");
-            }
-            catch (Exception ex)
-            {
-                ViewData["ErrorMessage"] = ex.Message;
-                Response.StatusCode = 500;
-                return View("Error");
-            }
         }
 
         [HttpPost, ActionName("Delete")]
-        [IsAuhenticated]
+        [IsAuthenticated]
         public IActionResult DeleteConfirmed(int id)
         {
             var user = _usersService.GetById(1);
