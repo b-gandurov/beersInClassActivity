@@ -1,31 +1,58 @@
-﻿@model IEnumerable<Beer>
+﻿@model IEnumerable<AspNetCoreDemo.Models.Beer>
+
+@{
+    ViewData["Title"] = "Search Beers";
+}
+
+<h2>Search Beers</h2>
+
+<form method="get" asp-action="Index" class="search-form">
+    <div class="form-group">
+        <input type="text" class="form-control" id="name" name="name" placeholder="Name" />
+    </div>
+    <div class="form-group">
+        <input type="text" class="form-control" id="type" name="type" placeholder="Type" />
+    </div>
+    <div class="form-group">
+        <input type="number" class="form-control" id="minAbv" name="minAbv" step="0.1" placeholder="Min ABV" />
+    </div>
+    <div class="form-group">
+        <input type="number" class="form-control" id="maxAbv" name="maxAbv" step="0.1" placeholder="Max ABV" />
+    </div>
+    <div class="form-group">
+        <select class="form-control" id="sortBy" name="sortBy">
+            <option value="name">Name</option>
+            <option value="type">Type</option>
+            <option value="abv">ABV</option>
+        </select>
+    </div>
+    <div class="form-group">
+        <select class="form-control" id="sortOrder" name="sortOrder">
+            <option value="asc">Ascending</option>
+            <option value="desc">Descending</option>
+        </select>
+    </div>
+    <button type="submit" class="">Search</button>
+</form>
+
 <div class="table">
     <h2 class="header-cell">Beers</h2>
 
     <div class="row-group">
         @if (Model.Any())
         {
-            @*    @foreach (var beer in Model)
-        {
-        <div class="row">
-        <div class="cell">
-        <a href="/Beers/Details/@beer.Id" class="beer-link">@beer.Name<img src=@beer.Image alt="Beer 1" class="beer-image"></a>
-
-        </div>
-        </div>
-        } *@
             @foreach (var beer in Model)
             {
                 <div class="row">
                     <div class="cell">
                         <a href="/Beers/Details/@beer.Id" class="beer-link">@beer.Name</a>
-                        <div class="beer-short-details">
-                            <img src=@beer.Image alt="Beer 1" class="beer-image">
-                            @*                                     <div class="beer-short-details">
-                    <p>ABV: @beer.Abv %</p>
-                    <p>Style: @beer.Style.Name</p>
-                    <p>Ratings: @beer.Ratings.Count</p>
-                    </div> *@
+                        <div class="beer-details-general">
+                            <img src="@beer.Image" alt="Beer Image" class="beer-image">
+                            <div class="beer-short-details">
+                                <p>ABV: @beer.Abv %</p>
+                                <p>Style: @beer.Style.Name</p>
+                                <p>Ratings: @beer.Ratings.Count</p>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -40,4 +67,15 @@
             </div>
         }
     </div>
+</div>
+<div class="pagination">
+    <a href="?pageNumber=@Math.Max(ViewBag.CurrentPage - 1, 1)&name=@ViewBag.Name&type=@ViewBag.Type&minAbv=@ViewBag.MinAbv&maxAbv=@ViewBag.MaxAbv&sortBy=@ViewBag.SortBy&sortOrder=@ViewBag.SortOrder"
+       class="btn-default@(ViewBag.CurrentPage == 1 ? "-disabled" : "")">Previous</a>
+
+    @for (int i = 1; i <= ViewBag.TotalPages; i++)
+    {
+        <a href="?pageNumber=@i&name=@ViewBag.Name&type=@ViewBag.Type&minAbv=@ViewBag.MinAbv&maxAbv=@ViewBag.MaxAbv&sortBy=@ViewBag.SortBy&sortOrder=@ViewBag.SortOrder" class="btn @(i == ViewBag.CurrentPage ? "btn-primary" : "btn-default")">@i</a>
+    }
+    <a href="?pageNumber=@Math.Min(ViewBag.CurrentPage + 1, ViewBag.TotalPages)&name=@ViewBag.Name&type=@ViewBag.Type&minAbv=@ViewBag.MinAbv&maxAbv=@ViewBag.MaxAbv&sortBy=@ViewBag.SortBy&sortOrder=@ViewBag.SortOrder"
+       class="btn-default@(ViewBag.CurrentPage == ViewBag.TotalPages ? "-disabled" : "")">Next</a>
 </div>

@@ -3,9 +3,23 @@
     border-bottom: 1px solid #dee2e6;
 }
 
-footer {
+/*footer {
     padding: 10px 50px 10px 50px;
+    
+}*/
+
+footer {
     border-top: 1px solid #dee2e6;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    background: white;
+    padding: 10px;
+    /*box-shadow: 0px -1px 5px rgba(0, 0, 0, 0.1);*/
+    z-index: 1000;
 }
 
 a {
@@ -15,11 +29,35 @@ a {
 .body-content {
     padding: 10px 50px 50px 50px;
 }
-.user-form{
+.search-form{
+    display:flex;
+    flex-direction:row;
+    justify-content: space-around;
+}
+
+    .search-form input,
+    .search-form select {
+        width: 180px;
+        font-size: 1rem;
+        padding: 5px 10px 5px 10px;
+        color: #495057;
+        background-color: #fff;
+        border: 1px solid #ced4da;
+        border-radius: 0.25rem;
+        transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+    }
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-content: center;
+    align-items:center;
+}
+.user-form {
     display: flex;
     margin: 20px;
     justify-content: center;
-    
 }
 .form-divs {
     width: 30%;
@@ -89,6 +127,7 @@ a {
 }
 
 .cell {
+    position:relative;
     display: table-cell;
     padding: 12px;
     border-bottom: 1px solid #dee2e6;
@@ -98,7 +137,7 @@ a {
 
 .beer-link {
     display: inline-block;
-    position: relative;
+    /*position: relative;*/
     z-index: 10;
 }
 /*.beer-short-details {
@@ -113,8 +152,32 @@ a {
     display: flex !important;
 }*/
 
+.beer-short-details {
+    /*position: absolute;*/
+    top: 0;
+    width: 0;
+    height: 0;
+    opacity: 0;
+    /*transition: opacity 0.5s ease-in;*/
+    z-index: 5;
+}
+
+.pagination {
+    display: flex;
+    justify-content: center;
+    position: fixed; /* Fixed position */
+    bottom: 60px; /* Adjust this value as needed */
+    gap: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: white; /* Ensure the background is white to cover any content behind */
+    padding: 10px; /* Add some padding for better appearance */
+    /*box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);*/ /* Optional: add a subtle shadow */
+    z-index: 1000; /* Ensure it is on top of other elements */
+}
+
 .beer-image {
-    position: absolute;
+    /*position: absolute;*/
     top: 0;
     width: 0;
     height: 0;
@@ -125,15 +188,48 @@ a {
 
 .cell:hover .beer-link {
     width: 100%;
-    height: 250px;
+    height: 260px;
+    /*height: 200px;*/
+    /*padding: 20px;*/
+    /*height: 250px;*/
+}
+
+.beer-details-general{
+    display:flex;
+    flex-direction:row;
+    /*margin:20px;*/
+    /*
+    justify-content:center;
+    align-content:center;
+    align-items:center;*/
+}
+
+.btn-default-disabled {
+    color: dimgrey;
+    pointer-events: none;
+    text-decoration: none;
+    cursor: default;
+}
+
+
+.cell:hover .beer-short-details {
+    position: absolute;
+    margin-left:260px;
+    margin-top: 100px;
+    width: 200px;
+    opacity: 1;
+    /*top: 40px;*/
 }
 
 .cell:hover .beer-image {
+    margin-top: 60px;
+    margin-left: 20px;
+    position:absolute;
     width: 200px;
     height: 200px;
     opacity: 1;
     left: 0;
-    top: 40px;
+    /*top: 40px;*/
 }
 
 .row:hover {
