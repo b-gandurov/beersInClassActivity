@@ -23,7 +23,12 @@ namespace AspNetCoreDemo.Services
 
         public List<Beer> FilterBy(BeerQueryParameters filterParameters)
         {
-            return this.repository.FilterBy(filterParameters);
+            return repository.FilterBy(filterParameters);
+        }
+
+        public int GetTotalCount(BeerQueryParameters filterParameters)
+        {
+            return repository.GetTotalCount(filterParameters);
         }
 
         public void VerifyUser(User user,int beerId) {

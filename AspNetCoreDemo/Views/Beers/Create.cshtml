@@ -1,29 +1,45 @@
-﻿@model BeerViewModel
+﻿@{
+    ViewData["Title"] = "Create Beer";
+}
+@model BeerViewModel
 
 <h2>Create a new beer</h2>
 <form asp-controller="Beers" asp-action="Create" method="post">
-    
+
     <div class="form-divs">
         <div>
-            <label asp-for="Name"></label>
-            <input asp-for="Name" type="text" />
+            @* <label asp-for="Name"></label>
+            <input asp-for="Name" type="text" /> *@
+            <input type="text" name="Name" placeholder="Beer Name" />
+            @* <input asp-for="Name" type="text" placeholder="Beer Name" /> *@
+
+        </div>
+        <div>
             <span asp-validation-for="Name"></span>
         </div>
 
         <div>
-            <label asp-for="Abv"></label>
-            <input asp-for="Abv" type="number" step="any" />
+            @* <label asp-for="Abv"></label>
+            <input asp-for="Abv" type="number" step="any" /> *@
+            <input type="number" class="form-control" id="Abv" name="Abv" placeholder="ABV %" step="0.1" />
+
+        </div>
+        <div>
             <span asp-validation-for="Abv"></span>
         </div>
 
         <div>
-            <label asp-for="StyleId"></label>
+            @* <label asp-for="StyleId"></label> *@
             <select asp-for="StyleId" asp-items="@Model.Styles"></select>
+        </div>
+        <div>
             <span asp-validation-for="StyleId"></span>
         </div>
 
         <div>
-            <input type="submit" value="Create" />
+            <input type="submit" value="Create" class="btn-1"/>
+        </div>
+        <div>
             <a class="button" href="/Beers/Index">Cancel</a>
         </div>
     </div>

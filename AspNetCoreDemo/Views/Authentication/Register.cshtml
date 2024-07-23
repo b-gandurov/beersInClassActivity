@@ -11,20 +11,27 @@
         <div>
             <label asp-for="Username"></label>
             <input type="text" asp-for="Username" />
-            <span asp-validation-for="Username"></span>
+
         </div>
+        <div><span asp-validation-for="Username"></span></div>
         <div>
             <label asp-for="Password"></label>
             <input type="password" asp-for="Password" />
+
+        </div>
+        <div>
             <span asp-validation-for="Password"></span>
         </div>
 
         <div>
             <label asp-for="ConfirmPassword"></label>
             <input type="password" asp-for="ConfirmPassword" />
+
+        </div>
+        <div>
             <span asp-validation-for="ConfirmPassword"></span>
         </div>
-        
+
         <div><button type="submit">Register</button></div>
         <div>
             <a class="button" href="/Beers/Index">Cancel</a>

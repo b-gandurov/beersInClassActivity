@@ -51,7 +51,21 @@ namespace AspNetCoreDemo.Repositories
             result = SortBy(result, filterParameters.SortBy);
             result = Order(result, filterParameters.SortOrder);
 
+            result = result.Skip((filterParameters.PageNumber-1) * filterParameters.PageSize)
+                               .Take(filterParameters.PageSize);
+
             return result.ToList();
+        }
+
+        public int GetTotalCount(BeerQueryParameters filterParameters)
+        {
+            IQueryable<Beer> result = this.GetBeers();
+            result = FilterByName(result, filterParameters.Name);
+            result = FilterByStyle(result, filterParameters.Style);
+            result = FilterByMinAbv(result, filterParameters.MinAbv);
+            result = FilterByMaxAbv(result, filterParameters.MaxAbv);
+
+            return result.Count();
         }
 
         public Beer Create(Beer beer)

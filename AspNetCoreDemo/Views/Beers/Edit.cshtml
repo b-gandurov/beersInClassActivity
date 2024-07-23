@@ -1,23 +1,35 @@
-﻿@model AspNetCoreDemo.Models.BeerViewModel
+﻿@{
+    ViewData["Title"] = "Edit Beer";
+}
+@model AspNetCoreDemo.Models.BeerViewModel
 <h2>Edit Beer</h2>
 <form asp-controller="Beers" asp-action="Edit" method="post">
     <div class="form-divs">
         <div>
             <label asp-for="Name"></label>
             <input asp-for="Name" type="text" class="gray-input" readonly />
+
+        </div>
+        <div>
             <span asp-validation-for="Name"></span>
         </div>
+
 
         <div>
             <label asp-for="Abv"></label>
             <input asp-for="Abv" type="number" step="any" />
+
+        </div>
+        <div>
             <span asp-validation-for="Abv"></span>
         </div>
 
         <div>
             <label asp-for="StyleId"></label>
             <select asp-for="StyleId" asp-items="@Model.Styles"></select>
-            <span asp-validation-for="StyleId"></span>
+        </div>
+        <div>
+            <span asp-validation-for="Abv"></span>
         </div>
 
         <div>

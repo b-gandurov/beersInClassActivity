@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Polly;
 using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Net;
@@ -32,11 +33,11 @@ namespace AspNetCoreDemo.Controllers.MVC
             _authManager = authManager;
 
         }
-        public IActionResult Index()
-        {
-            var beers = _beersService.GetAll();
-            return View(beers);
-        }
+        //public IActionResult Index()
+        //{
+        //    var beers = _beersService.GetAll();
+        //    return View(beers);
+        //}
 
         public IActionResult Details(int id)
         {
@@ -164,26 +165,70 @@ namespace AspNetCoreDemo.Controllers.MVC
             return RedirectToAction("Index");
         }
 
-        [HttpGet]
-        public IActionResult Index(string name, string type, double? minAbv, double? maxAbv, string sortBy, string sortOrder = "asc", int pageNumber = 1, int pageSize = 2)
+        public IActionResult Index([FromQuery] BeerQueryParameters filterParameters)
         {
-            var filterParameters = new BeerQueryParameters
+            if (string.IsNullOrEmpty(filterParameters.SortBy))
             {
-                Name = name,
-                Style = type,
-                MinAbv = minAbv,
-                MaxAbv = maxAbv,
-                SortBy = sortBy,
-                SortOrder = sortOrder
-            };
+                filterParameters.SortBy = "name";
+            }
+            if (string.IsNullOrEmpty(filterParameters.SortOrder))
+            {
+                filterParameters.SortOrder = "asc";
+            }
 
             var beers = _beersService.FilterBy(filterParameters);
-            var paginatedBeers = beers.Skip((pageNumber - 1) * pageSize).Take(pageSize).ToList();
+            var totalCount = _beersService.GetTotalCount(filterParameters);
 
-            ViewBag.CurrentPage = pageNumber;
-            ViewBag.TotalPages = (int)Math.Ceiling(beers.Count() / (double)pageSize);
+            ViewBag.CurrentPage = filterParameters.PageNumber;
+            ViewBag.TotalPages = (int)Math.Ceiling((decimal)totalCount / filterParameters.PageSize);
+            ViewBag.Name = filterParameters.Name;
+            ViewBag.Style = filterParameters.Style;
+            ViewBag.MinAbv = filterParameters.MinAbv;
+            ViewBag.MaxAbv = filterParameters.MaxAbv;
+            ViewBag.SortBy = filterParameters.SortBy;
+            ViewBag.SortOrder = filterParameters.SortOrder;
+            ViewBag.PageNumbers = GeneratePageNumbers(ViewBag.CurrentPage, ViewBag.TotalPages);
 
-            return View(paginatedBeers);
+            return View(beers);
+        }
+
+        private List<int?> GeneratePageNumbers(int currentPage, int totalPages)
+        {
+            const int maxPagesToShow = 1;
+            var pages = new List<int?>();
+
+            if (totalPages <= maxPagesToShow)
+            {
+                for (int i = 1; i <= totalPages; i++)
+                {
+                    pages.Add(i);
+                }
+            }
+            else
+            {
+                pages.Add(1);
+                if (currentPage > 3)
+                {
+                    pages.Add(null);
+                }
+
+                int startPage = Math.Max(2, currentPage - 1);
+                int endPage = Math.Min(totalPages - 1, currentPage + 1);
+
+                for (int i = startPage; i <= endPage; i++)
+                {
+                    pages.Add(i);
+                }
+
+                if (currentPage < totalPages-2)
+                {
+                    pages.Add(null);
+                }
+                pages.Add(totalPages);
+            }
+
+            return pages;
         }
     }
 }
+

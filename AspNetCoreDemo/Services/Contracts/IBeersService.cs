@@ -7,6 +7,7 @@ namespace AspNetCoreDemo.Services
     {
         List<Beer> GetAll();
         List<Beer> FilterBy(BeerQueryParameters filterParameters);
+        int GetTotalCount(BeerQueryParameters filterParameters);
         Beer GetById(int id);
         Beer Create(Beer beer, User user);
         Beer Update(int id, Beer beer, User user);

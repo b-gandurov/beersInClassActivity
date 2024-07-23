@@ -9,18 +9,18 @@
         <div>
             <label asp-for="Username"></label>
             <input type="text" asp-for="Username" />
-            <span asp-validation-for="Username"></span>
+            
         </div>
+        <div><span asp-validation-for="Username"></span></div>
         <div>
             <label asp-for="Password"></label>
             <input type="password" asp-for="Password" />
-            <span asp-validation-for="Password"></span>
+            
         </div>
+        <div><span asp-validation-for="Password"></span></div>
 
         <div>
             <button type="submit">Login</button>
-            
-            
         </div>
         <div>
             <a href="/Authentication/Register">Don't have an account?</a>

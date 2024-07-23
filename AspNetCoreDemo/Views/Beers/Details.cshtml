@@ -1,4 +1,8 @@
-﻿@model BeerResponseDto
+﻿@{
+    ViewData["Title"] = "Beer Details";
+}
+
+@model BeerResponseDto
 <h1><span id="beer-name">@Model.Name</span></h1>
 <p><strong>ABV:</strong> <span id="beer-abv">@Model.Abv</span></p>
 <p><strong>Style:</strong> <span id="beer-style">@Model.Style</span></p>

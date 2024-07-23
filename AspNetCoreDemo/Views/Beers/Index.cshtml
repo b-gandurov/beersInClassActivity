@@ -1,38 +1,25 @@
 ﻿@model IEnumerable<AspNetCoreDemo.Models.Beer>
 
 @{
-    ViewData["Title"] = "Search Beers";
+    ViewData["Title"] = "Beers";
 }
 
 <h2>Search Beers</h2>
 
 <form method="get" asp-action="Index" class="search-form">
     <div class="form-group">
-        <input type="text" class="form-control" id="name" name="name" placeholder="Name" />
+        <input type="text" class="form-control" name="name" placeholder="Name" />
     </div>
     <div class="form-group">
-        <input type="text" class="form-control" id="type" name="type" placeholder="Type" />
+        <input type="text" class="form-control" name="style" placeholder="Style" />
     </div>
     <div class="form-group">
-        <input type="number" class="form-control" id="minAbv" name="minAbv" step="0.1" placeholder="Min ABV" />
+        <input type="number" class="form-control" name="minAbv" step="0.1" placeholder="Min ABV" />
     </div>
     <div class="form-group">
-        <input type="number" class="form-control" id="maxAbv" name="maxAbv" step="0.1" placeholder="Max ABV" />
+        <input type="number" class="form-control" name="maxAbv" step="0.1" placeholder="Max ABV" />
     </div>
-    <div class="form-group">
-        <select class="form-control" id="sortBy" name="sortBy">
-            <option value="name">Name</option>
-            <option value="type">Type</option>
-            <option value="abv">ABV</option>
-        </select>
-    </div>
-    <div class="form-group">
-        <select class="form-control" id="sortOrder" name="sortOrder">
-            <option value="asc">Ascending</option>
-            <option value="desc">Descending</option>
-        </select>
-    </div>
-    <button type="submit" class="">Search</button>
+    <button type="submit" class="btn btn-primary">Search</button>
 </form>
 
 <div class="table">
@@ -68,14 +55,28 @@
         }
     </div>
 </div>
+
 <div class="pagination">
-    <a href="?pageNumber=@Math.Max(ViewBag.CurrentPage - 1, 1)&name=@ViewBag.Name&type=@ViewBag.Type&minAbv=@ViewBag.MinAbv&maxAbv=@ViewBag.MaxAbv&sortBy=@ViewBag.SortBy&sortOrder=@ViewBag.SortOrder"
+    <a href="?pageNumber=@Math.Max(ViewBag.CurrentPage - 1, 1)&pageSize=@ViewBag.PageSize&Name=@ViewBag.Name&Style=@ViewBag.Style&MinAbv=@ViewBag.MinAbv&MaxAbv=@ViewBag.MaxAbv&SortBy=@ViewBag.SortBy&SortOrder=@ViewBag.SortOrder" 
        class="btn-default@(ViewBag.CurrentPage == 1 ? "-disabled" : "")">Previous</a>
 
-    @for (int i = 1; i <= ViewBag.TotalPages; i++)
+    @foreach (var page in ViewBag.PageNumbers)
     {
-        <a href="?pageNumber=@i&name=@ViewBag.Name&type=@ViewBag.Type&minAbv=@ViewBag.MinAbv&maxAbv=@ViewBag.MaxAbv&sortBy=@ViewBag.SortBy&sortOrder=@ViewBag.SortOrder" class="btn @(i == ViewBag.CurrentPage ? "btn-primary" : "btn-default")">@i</a>
+        if (page is not null)
+        {
+            <a href="?pageNumber=@(page)&pageSize=@ViewBag.PageSize&Name=@ViewBag.Name&Style=@ViewBag.Style&MinAbv=@ViewBag.MinAbv&MaxAbv=@ViewBag.MaxAbv&SortBy=@ViewBag.SortBy&SortOrder=@ViewBag.SortOrder" 
+               class="@(page == ViewBag.CurrentPage ? "btn-default-disabled" : "btn-default")">@(page)</a>
+        }
+        else
+        {
+            <span>...</span>
+        }
     }
-    <a href="?pageNumber=@Math.Min(ViewBag.CurrentPage + 1, ViewBag.TotalPages)&name=@ViewBag.Name&type=@ViewBag.Type&minAbv=@ViewBag.MinAbv&maxAbv=@ViewBag.MaxAbv&sortBy=@ViewBag.SortBy&sortOrder=@ViewBag.SortOrder"
+    
+    <a href="?pageNumber=@Math.Min(ViewBag.CurrentPage + 1, ViewBag.TotalPages)&pageSize=@ViewBag.PageSize&Name=@ViewBag.Name&Style=@ViewBag.Style&MinAbv=@ViewBag.MinAbv&MaxAbv=@ViewBag.MaxAbv&SortBy=@ViewBag.SortBy&SortOrder=@ViewBag.SortOrder" 
        class="btn-default@(ViewBag.CurrentPage == ViewBag.TotalPages ? "-disabled" : "")">Next</a>
 </div>
+
+<footer>
+    <small>©️ Copyright 2024, BeerOverflow</small>
+</footer>
